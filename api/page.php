@@ -8,3 +8,4 @@ $basePath = '/projet2/api/page.php';
 $cleanPath = str_replace($basePath, '', $request);
 $parts = array_values(array_filter(explode('/', $cleanPath)));
 
+//

@@ -24,6 +24,11 @@ if (isset($parts[0]) && $parts[0] === 'gamers' && $parts[1] === 'add') {
             $hashed_pwd = password_hash($pwd, PASSWORD_DEFAULT);
             $stmt = $pdo->prepare("INSERT INTO players (login, password, last_login) VALUES (?, ?, NOW())");
             $stmt->execute([$login, $hashed_pwd]);
+            
+            //debut session 
+            session_start(); 
+            $_SESSION['login'] = $login; 
+            $_SESSION['pwd'] = $pwd; 
 
             $newId = $pdo->lastInsertId();
             echo json_encode(["success" => true, "id" => $newId]);
@@ -46,8 +51,16 @@ elseif ($parts[0] === 'gamers' && $parts[1] === 'login') {
             // Update last login time
             $update = $pdo->prepare("UPDATE players SET last_login = NOW() WHERE id = ?");
             $update->execute([$user['id']]);
+            
+            //debut session
+            if(session_status() === PHP_SESSION_NONE){
+                session_start(); 
+            }
+            $_SESSION['login'] = $login; 
+            $_SESSION['pwd'] = $pwd; 
 
             echo json_encode(["success" => true, "id" => $user['id']]);
+            
         } else {
             echo json_encode(["error" => "Invalid login or password"]);
         }
@@ -67,6 +80,10 @@ elseif ($parts[0] === 'gamers' && $parts[1] === 'logout') {
 
         if ($user && password_verify($pwd, $user['password'])) {
             echo json_encode(["success" => true, "message" => "Logged out."]);
+
+            //terminer la session
+            session_destroy(); 
+
         } else {
             echo json_encode(["error" => "Invalid login or password"]);
         }
@@ -87,6 +104,16 @@ elseif ($parts[0] === 'gamers' && isset($parts[1]) && !in_array($parts[1], ['add
     } else {
         echo json_encode(["error" => "Player not found"]);
     }
+}
+elseif($parts[0] === 'gamers' && $parts[1] === 'session'){
+
+    if(session_status !== PHP_SESSION_NONE){
+    echo json_encode([
+        'login' => $_SESSION['login']
+        'pwd' => $_SESSION['pwd']
+    ]);
+    }
+    else echo json_encode("erreur: aucune session active"); 
 }
 else {
     echo json_encode(["error" => "Invalid route"]);
