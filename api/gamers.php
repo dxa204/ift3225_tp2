@@ -115,6 +115,17 @@ elseif($parts[0] === 'gamers' && $parts[1] === 'session'){
     }
     else echo json_encode("erreur: aucune session active"); 
 }
+elseif($parts[0] === "gamers" && $parts[1] === "add" && $parts[2] === "score" && isset($parts[3]) && isset($parts[4])){
+
+    $stmt = $pdo->prepare("UPDATE players SET score = ? WHERE login = ?"); 
+    $stmt->execute([$parts[3], $parts[4]]);
+    $state = $stmt->fetch(); 
+
+    if($state){
+        echo json_encode("score mis a jour"); 
+    }
+    else echo json_encode("votre score n'a pas pu etre mis a jour"); 
+}
 else {
     echo json_encode(["error" => "Invalid route"]);
 }

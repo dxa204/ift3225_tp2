@@ -34,3 +34,12 @@
   cursor: pointer;
   color: #888;
 }
+
+#indiceForm {
+  display: none;
+}
+
+#suggestions {
+  display: none;
+  border: 2px solid black;
+}
