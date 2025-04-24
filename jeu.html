@@ -1,39 +1,32 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <script src="jeu.js"></script>
+    <script type="type/javascript" src="jeu.js"></script>
     <link rel="stylesheet" href="jeu.css" />
+    <title>Jeu</title>
   </head>
-  <body onload="generatePage()">
+  <body>
     <div class="row">
       <div class="column">
-        <span
-          ><img id="imagePdp" src="profil.png" alt="photo de profil" />
-          <h5 id="joueur">nom</h5></span
-        >
-        <span
-          ><img id="imageTr" src="trophee.png" alt="trophee" />
-          <h5 id="scoreJoueur">score</h5></span
-        >
-        <progress
-          id="points"
-          value="pointsencours"
-          max="pointsmaximum(longueur * 10)"
-        >
-          score courant
-        </progress>
+        <div>
+          <img id="imagePdp" src="profil.png" alt="photo de profil" />
+          <h5 id="affichageNomJoueur">nom</h5>
+        </div>
+        <div>
+          <img id="imageTr" src="trophee.png" alt="trophee" />
+          <h5 id="scoreJoueur">score</h5>
+        </div>
+        <progress id="points" value="0" max="1000"></progress>
+        <div id="affichageScore"></div>
       </div>
       <div class="column">
         <h5 id="definition"></h5>
-        <table>
-          <tr id="longueur">
-            <td><p>_</p></td>
-            <!--texte remplacable par lettre que user entre-->
-          </tr>
-        </table>
-        <span>
-          <img id="horloge" src="clock.jpg" alt="horloge" /> temps restant
-        </span>
+        <div id="affichageMot"></div>
+        <input type="text" id="entreeLettre" maxlength="1" autofocus />
+        <div>
+          <img id="horloge" src="clock.jpg" alt="horloge" />
+          <p id="tempsRestant"></p>
+        </div>
       </div>
     </div>
   </body>
